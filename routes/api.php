@@ -2,9 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\TicketController;
 
 
 /*
@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Route::middleware('auth:sanctum')->post('/ticket/create', [TicketController::class, 'create']);
 // Route::get('/ticket/{id}', [TicketController::class, 'getTicket']);
+Route::delete('/ticket/{id}', [TicketController::class, 'destroy']);
 Route::put('/ticket/{id}', [TicketController::class, 'update']);
 Route::post('/register', [AuthController::class, 'Register']);
 Route::post('/login', [AuthController::class, 'login']);
