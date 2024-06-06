@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landingPage');
 });
-Route::get('/login', function () {
-    return view('auth.login');
+
+Route::controller(AuthController::class)->group(function () {
+
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login-process', 'actionlogin')->name('actionlogin');
+    Route::get('/logout', 'actionlogout')->name('logout');
+
 });
-Route::get('/dashboard', function () {
-    return view('layouts.dashboardAdmin');
+
+Route::middleware(['auth', 'role:superAdmin'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboardAdmin');
+    })->name('dashboard');
+    Route::resource('data-akun', DataAccountController::class);
 });
+
+
