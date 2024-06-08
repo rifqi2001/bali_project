@@ -63,23 +63,30 @@
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item">
-                            <a href="/dataPembeli" class="submenu-link">Data Pembeli</a>
+                            <a href="{{ route('tickets.index') }}" class="submenu-link">Transaksi</a>
                         </li>
                         <li class="submenu-item">
                             <a href="/tiket" class="submenu-link">Tiket</a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-collection-fill"></i>
+                        <span>Data Laporan</span>
+                    </a>
+                    <ul class="submenu">
                         <li class="submenu-item">
-                            <a href="/laporanTiketMasuk" class="submenu-link">Laporan tiket masuk</a>
+                            <a href="/" class="submenu-link">Tiket Masuk</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="/" class="submenu-link">Kunjungan</a>
                         </li>
                     </ul>
                 </li>
         
-                <li class="sidebar-item">
-                    <a href="/dataKunjungan" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Data Kunjungan</span>
-                    </a>
-                </li>
+                
             </ul>
         
             <!-- Menu Logout -->
