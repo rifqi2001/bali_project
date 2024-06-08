@@ -10,10 +10,11 @@ class PaymentConfirmation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_pengguna',
-        'tanggal_kunjungan',
-        'jumlah_tiket',
-        'total_harga_tiket',
+        'bank_name',
+        'account_number',
+        'account_owner',
+        'nominal',
+        'transfer_date',
         'image_path',
     ];
 }
