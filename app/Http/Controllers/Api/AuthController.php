@@ -6,22 +6,25 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function Register(Request $R){
-        try{
-            $cred = new User();
-            $cred->name = $R->name;
-            $cred->email = $R->email;
-            $cred->password = Hash::make($R->password);
-            $cred->save();
-            $response=['status' => 200, 'message' => 'Register Successfully! Welcome to Our Community'];
-            return response()->json($response);
-        }catch(Exception $e){
-            $response = ['status'=>500, 'message' => $e];
-        }
-    }
+    // public function Register(Request $request){
+    //     try{
+    //         $cred = new User();
+    //         $cred->name = $request->name;
+    //         $cred->email = $request->email;
+    //         $cred->password = Hash::make($request->password);
+    //         $cred->save();
+    //         $response=['status' => 200, 'message' => 'Register Successfully! Welcome to Our Community'];
+    //         return response()->json($response);
+    //     }catch(Exception $e){
+    //         $response = ['status'=>500, 'message' => $e];
+    //     }
+    // }
 
     function Login(Request $request){
         $request->validate([
@@ -62,25 +65,39 @@ class AuthController extends Controller
         ]);
     }
 
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'password' => 'required|string',
-    //     ]);
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
 
-    //     if (!Auth::attempt($request->only('email', 'password'))) {
-    //         return response()->json([
-    //             'message' => 'Invalid login details'
-    //         ], 401);
-    //     }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
-    //     $user = Auth::user();
-    //     $token = $user->createToken('authToken')->accessToken;
+        try {
+            DB::beginTransaction();
 
-    //     return response()->json([
-    //         'user' => $user,
-    //         'token' => $token,
-    //     ]);
-    // }
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
+
+            $user->assignRole('customer');
+
+            Customer::create([
+                'user_id' => $user->id,
+            ]);
+
+            DB::commit();
+
+            return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Failed to create account. Please try again.'], 500);
+        }
+    }
 }
