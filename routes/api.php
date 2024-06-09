@@ -36,3 +36,4 @@ Route::put('/ticket/{id}', [TicketController::class, 'update']);
 Route::post('/register', [AuthController::class, 'Register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/payment/confirm', [PaymentController::class, 'confirmPayment']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
