@@ -15,10 +15,11 @@ class CreatePaymentConfirmationsTable extends Migration
     {
         Schema::create('payment_confirmations', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pengguna');
-            $table->string('tanggal_kunjungan');
-            $table->string('jumlah_tiket');
-            $table->string('total_harga_tiket');
+            $table->string('bank_name');
+            $table->string('account_number');
+            $table->string('account_owner');
+            $table->string('nominal');
+            $table->string('transfer_date');
             $table->string('image_path');
             $table->timestamps();
         });
