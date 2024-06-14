@@ -20,7 +20,9 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with outer spacing -->
-                        <button id="btnTambahPelanggan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan">Tambah Data Transaksi</button>
+                        {{-- <button id="btnTambahPelanggan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan">Tambah Data Transaksi</button> --}}
+                        <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Transaksi Tiket</a>
+                        <a href="{{ route('payments.index') }}" class="btn btn-primary">Konfirmasi Pembayaran</a>
 
                         <!-- Modal untuk tambah data pelanggan -->
                         <div class="modal fade" id="modalTambahPelanggan" tabindex="-1" aria-labelledby="modalTambahPelangganLabel" aria-hidden="true">
@@ -76,7 +78,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        
+                        <div class="table-responsive mt-2">
                             <table class="table table-lg">
                                 <thead>
                                     <tr>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataAccountController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     })->name('dashboard');
     Route::resource('data-akun', DataAccountController::class);
     Route::resource('tickets', TicketController::class);
+    Route::resource('payments', PaymentController::class);
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
