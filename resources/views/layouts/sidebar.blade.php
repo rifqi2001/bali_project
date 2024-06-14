@@ -56,13 +56,14 @@
                     </a>
                 </li>                
         
-                <li class="sidebar-item has-sub">
+                <li class="sidebar-item has-sub{{ request()->routeIs('tickets.index') ? ' active' : '' }}
+                                                {{ request()->routeIs('payments.index') ? ' active' : '' }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Data Tiket</span>
                     </a>
                     <ul class="submenu">
-                        <li class="submenu-item">
+                        <li class="submenu-item{{ request()->routeIs('tickets.index') ? ' active' : '' }}">
                             <a href="{{ route('tickets.index') }}" class="submenu-link">Transaksi</a>
                         </li>
                         <li class="submenu-item">
