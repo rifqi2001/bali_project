@@ -108,19 +108,20 @@ class TicketController extends Controller
 
     public function destroy($id)
     {
-        $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+        $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            return response()->json(['message' => 'Ticket not found'], 404);
         }
 
-        $ticket = Ticket::where('user_id', $user->id)->findOrFail($id);
-
-        if ($ticket) {
-            $ticket->delete();
-            return response()->json(['message' => 'Ticket deleted successfully'], 200);
-        } else {
-            return response()->json(['error' => 'Ticket not found'], 404);
+        if ($ticket->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
+
+        $ticket->delete();
+
+        return response()->json(['message' => 'Ticket deleted successfully'], 200);
+
     }
 }

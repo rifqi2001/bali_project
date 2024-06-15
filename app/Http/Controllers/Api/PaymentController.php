@@ -23,7 +23,7 @@ class PaymentController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $path = $image->store('images', 'public');
+            $path = str_replace('public/', '', $image->store('public/images'));
 
             $paymentConfirmation = PaymentConfirmation::create([
                 // 'tickets' => $tickets->id,
