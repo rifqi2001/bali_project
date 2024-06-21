@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NotificationController;
 
 
 /*
@@ -26,14 +28,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/ticket/create', [TicketController::class, 'create']);
     Route::get('/ticket', [TicketController::class, 'index']);
     Route::get('/ticket/{id}', [TicketController::class, 'show']);
-    // Route::post('/payment/confirm', [PaymentController::class, 'store']);
+    Route::delete('/ticket/{id}', [TicketController::class, 'destroy']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'getProfile']);
+    Route::put('/profile', [UserController::class, 'updateProfile']);
+    Route::post('/change-password', [UserController::class, 'changePassword']);
 });
 
-// Route::middleware('auth:sanctum')->post('/ticket/create', [TicketController::class, 'create']);
-// Route::get('/ticket/{id}', [TicketController::class, 'getTicket']);
-Route::delete('/ticket/{id}', [TicketController::class, 'destroy']);
 Route::put('/ticket/{id}', [TicketController::class, 'update']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/payment/confirm', [PaymentController::class, 'confirmPayment']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/notifications/all', [NotificationController::class, 'sendToAll']);
+Route::post('/notifications/specific', [NotificationController::class, 'sendToSpecific']);
+Route::get('/notifications/{userId}', [NotificationController::class, 'getNotifications']);
+Route::delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);

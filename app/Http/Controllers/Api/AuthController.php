@@ -12,20 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    // public function Register(Request $request){
-    //     try{
-    //         $cred = new User();
-    //         $cred->name = $request->name;
-    //         $cred->email = $request->email;
-    //         $cred->password = Hash::make($request->password);
-    //         $cred->save();
-    //         $response=['status' => 200, 'message' => 'Register Successfully! Welcome to Our Community'];
-    //         return response()->json($response);
-    //     }catch(Exception $e){
-    //         $response = ['status'=>500, 'message' => $e];
-    //     }
-    // }
-
     function Login(Request $request){
         $request->validate([
             'email' => 'required|email',
