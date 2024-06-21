@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\NotificationController;
 
 
 /*
@@ -30,13 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/ticket/{id}', [TicketController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [UserController::class, 'getProfile']);
-    Route::post('/profile', [UserController::class, 'updateProfile']);
+    Route::put('/profile', [UserController::class, 'updateProfile']);
     Route::post('/change-password', [UserController::class, 'changePassword']);
-    // Route::post('/payment/confirm', [PaymentController::class, 'store']);
 });
 
 Route::put('/ticket/{id}', [TicketController::class, 'update']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/payment/confirm', [PaymentController::class, 'confirmPayment']);
-// Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/notifications/all', [NotificationController::class, 'sendToAll']);
+Route::post('/notifications/specific', [NotificationController::class, 'sendToSpecific']);
+Route::get('/notifications/{userId}', [NotificationController::class, 'getNotifications']);
+Route::delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
