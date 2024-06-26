@@ -20,9 +20,17 @@
                     </div>
                     <div class="card-body">
                         <!-- Table with outer spacing -->
-                        {{-- <button id="btnTambahPelanggan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan">Tambah Data Transaksi</button> --}}
-                        <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Transaksi Tiket</a>
-                        <a href="{{ route('payments.index') }}" class="btn btn-primary">Konfirmasi Pembayaran</a>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Transaksi Tiket</a>
+                                <a href="{{ route('payments.index') }}" class="btn btn-primary">Konfirmasi Pembayaran</a>
+                            </div>
+                            <div class="col-md-6">
+                            <button id="btnTambahPelanggan" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan" style="margin-left: 50%">Tambah Data Transaksi</button>
+
+                            </div>
+                        </div>
+                        
 
                         <!-- Modal untuk tambah data pelanggan -->
                         <div class="modal fade" id="modalTambahPelanggan" tabindex="-1" aria-labelledby="modalTambahPelangganLabel" aria-hidden="true">
@@ -84,6 +92,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Nomor tiket</th>
                                         <th>Nama Pelanggan</th>
                                         <th>Tanggal Kunjungan</th>
                                         <th>Jumlah Tiket</th>
@@ -97,6 +106,7 @@
                                     @foreach ($tickets as $index => $data)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
+                                            <td>{{ $data->ticket_number }}</td>
                                             <td>{{ $data->user->name ?? 'Tidak Diketahui' }}</td>
                                             <td>{{ $data->visit_date }}</td>
                                             <td>{{ $data->ticket_count }}</td>
