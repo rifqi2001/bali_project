@@ -13,6 +13,7 @@ class PaymentController extends Controller
         // $tickets = Ticket::find($request->tickets_id);
 
         $request->validate([
+            'ticket_id' => 'required|exists:tickets,id',
             'bank_name' => 'required|string',
             'account_number' => 'required|string',
             'account_owner' => 'required|string',
@@ -27,6 +28,7 @@ class PaymentController extends Controller
 
             $paymentConfirmation = PaymentConfirmation::create([
                 // 'tickets' => $tickets->id,
+                'ticket_id' => $request->ticket_id,
                 'bank_name' => $request->bank_name,
                 'account_number' => $request->account_number,
                 'account_owner' => $request->account_owner,
