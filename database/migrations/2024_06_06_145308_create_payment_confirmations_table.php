@@ -15,6 +15,7 @@ class CreatePaymentConfirmationsTable extends Migration
     {
         Schema::create('payment_confirmations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ticket_id')->constrained();
             $table->string('bank_name');
             $table->string('account_number');
             $table->string('account_owner');

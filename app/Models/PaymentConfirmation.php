@@ -10,6 +10,7 @@ class PaymentConfirmation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'ticket_id',
         'bank_name',
         'account_number',
         'account_owner',
@@ -17,4 +18,10 @@ class PaymentConfirmation extends Model
         'transfer_date',
         'image_path',
     ];
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
 }
+
