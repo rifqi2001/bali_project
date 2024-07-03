@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataAccountController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::resource('data-akun', DataAccountController::class);
     Route::resource('tickets', TicketController::class);
     Route::resource('payments', PaymentController::class);
+    Route::resource('notifications', NotificationController::class);
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
