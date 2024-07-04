@@ -22,16 +22,14 @@
                         <!-- Table with outer spacing -->
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Transaksi Tiket</a>
-                                <a href="{{ route('payments.index') }}" class="btn btn-primary">Konfirmasi Pembayaran</a>
+                                {{-- <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Transaksi Tiket</a>
+                                <a href="{{ route('payments.index') }}" class="btn btn-primary">Konfirmasi Pembayaran</a> --}}
                             </div>
                             <div class="col-md-6">
-                            <button id="btnTambahPelanggan" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan" style="margin-left: 50%">Tambah Data Transaksi</button>
-
+                                <button id="btnTambahPelanggan" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTambahPelanggan" style="margin-left: 50%">Tambah Data Transaksi</button>
                             </div>
                         </div>
                         
-
                         <!-- Modal untuk tambah data pelanggan -->
                         <div class="modal fade" id="modalTambahPelanggan" tabindex="-1" aria-labelledby="modalTambahPelangganLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -99,7 +97,8 @@
                                         <th>Kode Promo</th>
                                         <th>Total Harga</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        <th>Detail</th> <!-- Kolom Detail -->
+                                        <th>Aksi</th> <!-- Kolom Aksi -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -114,6 +113,10 @@
                                             <td>{{ $data->total_price }}</td>
                                             <td>{{ $data->status }}</td>
                                             <td>
+                                                
+                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal" data-id="{{ $data->id }}">Lihat Detail</button>
+                                            </td>
+                                            <td>
                                                 <!-- Tombol aksi untuk mengedit atau menghapus data akun -->
                                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $data->id }}">
                                                     <i class="bi bi-pencil"></i>
@@ -121,6 +124,10 @@
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $data->id }}">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
+                                                
+
+                                                
+
 
                                                 <!-- Modal Edit -->
                                                 <div class="modal fade" id="modalEdit{{ $data->id }}" tabindex="-1" aria-labelledby="modalEditLabel{{ $data->id }}" aria-hidden="true">
@@ -173,10 +180,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>    
+                                                </div>
+  
                                             </td>
                                         </tr>
                                     @endforeach
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="detailModalLabel">Detail Transaksi</h3>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" id="modalContent">
+                                                    <!-- Konten modal akan dimuat di sini -->
+                                                    <p>Memuat detail...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </tbody>                                    
                             </table>
                         </div>
@@ -189,5 +213,26 @@
 @endsection
 
 @section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var detailModal = document.getElementById('detailModal');
+        detailModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Tombol yang diklik
+            var ticketId = button.getAttribute('data-id'); // Ambil ID tiket dari atribut data
+
+            // Lakukan permintaan AJAX untuk mendapatkan detail transaksi
+            fetch(`/tickets/${ticketId}/detail`)
+                .then(response => response.text())
+                .then(html => {
+                    // Isi konten modal dengan HTML yang diterima
+                    document.getElementById('modalContent').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error fetching ticket details:', error);
+                    document.getElementById('modalContent').innerHTML = '<p>Gagal memuat detail transaksi.</p>';
+                });
+        });
+    });
+</script>
 
 @endsection

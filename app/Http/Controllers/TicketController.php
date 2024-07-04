@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\User;
+use App\Models\PaymentConfirmation;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -18,6 +19,8 @@ class TicketController extends Controller
         // Mengambil semua data user dari tabel users
         $tickets = Ticket::all();
         $users = User::all();
+        $payments = PaymentConfirmation::all();
+
         
         // Mengembalikan view akun.index dengan variabel accounts
         return view('dataTiket.transaksi.index', compact('tickets', 'users'));
@@ -84,7 +87,10 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        //
+        // $ticket = Ticket::findOrFail($id);
+        // $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
+
+        // return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
     }
 
     /**
@@ -129,4 +135,15 @@ class TicketController extends Controller
         $ticket->delete();
         return redirect()->route('tickets.index')->with('success', 'Data tiket berhasil dihapus.');
     }
+
+    public function detail($id)
+{
+    $ticket = Ticket::findOrFail($id);
+    $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
+
+    // Mengembalikan view partial yang akan dimuat ke dalam modal
+    return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
+}
+
+    
 }

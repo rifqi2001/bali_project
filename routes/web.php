@@ -22,6 +22,7 @@ Route::get('/', function () {
     return view('landingPage');
 });
 
+
 Route::controller(AuthController::class)->group(function () {
 
     Route::get('/login', 'login')->name('login');
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     })->name('dashboard');
     Route::resource('data-akun', DataAccountController::class);
     Route::resource('tickets', TicketController::class);
+    Route::get('/tickets/{id}/detail', [TicketController::class, 'detail'])->name('tickets.detail');
     Route::resource('payments', PaymentController::class);
     Route::resource('notifications', NotificationController::class);
 });
