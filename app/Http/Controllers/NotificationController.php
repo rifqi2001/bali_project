@@ -3,74 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Notification;
-use App\Models\Customer;
 
 class NotificationController extends Controller
 {
     public function index()
     {
-        $notifications = Notification::all();
-        return view('notifications.index', compact('notifications'));
-    }
-
-    public function create()
-    {
-        return view('notifications.create');
+        $notifications = Notification::with('user')->get();
+        $users = User::all();
+        return view('notifications.index', compact('notifications', 'users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string',
-            'message' => 'required|string'
+            'user_id' => 'required',
+            'title' => 'required',
+            'message' => 'required',
         ]);
 
-        Notification::create([
-            'user_id' => $request->user_id,
-            'message' => $request->message,
-            'title' => $request->title,
-        ]);
+        if ($request->user_id == 'all') {
+            $users = User::all();
+            foreach ($users as $user) {
+                Notification::create([
+                    'user_id' => $user->id,
+                    'title' => $request->title,
+                    'message' => $request->message,
+                ]);
+            }
+        } else {
+            Notification::create([
+                'user_id' => $request->user_id,
+                'title' => $request->title,
+                'message' => $request->message,
+            ]);
+        }
 
-        return redirect()->route('notifications.index')->with('success', 'Notification sent successfully');
-    }
-
-    public function show($id)
-    {
-        $notification = Notification::findOrFail($id);
-        return view('notifications.show', compact('notification'));
-    }
-
-    public function edit($id)
-    {
-        $notification = Notification::findOrFail($id);
-        return view('notifications.edit', compact('notification'));
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil ditambahkan.');
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string',
-            'message' => 'required|string'
+            'title' => 'required',
+            'message' => 'required',
         ]);
 
         $notification = Notification::findOrFail($id);
         $notification->update([
-            'user_id' => $request->user_id,
-            'message' => $request->message,
             'title' => $request->title,
+            'message' => $request->message,
         ]);
 
-        return redirect()->route('notifications.index')->with('success', 'Notification updated successfully');
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         $notification = Notification::findOrFail($id);
         $notification->delete();
-        return redirect()->route('notifications.index')->with('success', 'Notification deleted successfully');
+
+        return redirect()->route('notifications.index')->with('success', 'Notifikasi berhasil dihapus.');
     }
 }
