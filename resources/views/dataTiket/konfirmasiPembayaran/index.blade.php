@@ -70,6 +70,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>ID TICKET</th>
                                     <th>Bank Name</th>
                                     <th>Account Number</th>
                                     <th>Account Owner</th>
@@ -83,6 +84,7 @@
                                 @foreach ($payments as $index => $payment)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{ $payment->ticket_id }}</td>
                                         <td>{{ $payment->bank_name }}</td>
                                         <td>{{ $payment->account_number }}</td>
                                         <td>{{ $payment->account_owner }}</td>
@@ -142,7 +144,23 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </tbody>                                    
+                            </tbody>   
+                            <div class="modal fade" id="buktiModal{{ $confirmation->id }}" tabindex="-1" role="dialog" aria-labelledby="buktiModalLabel{{ $payment->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="buktiModalLabel{{ $confirmation->id }}">Bukti Pembayaran</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ asset('storage/' . $confirmation->image_path) }}" alt="Payment Image" class="img-fluid">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                 
                         </table>
                     </div>
                 </div>
