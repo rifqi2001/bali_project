@@ -86,6 +86,13 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="sidebar-item{{ request()->routeIs('notifications.index') ? ' active' : '' }}">
+                    <a href="{{ route('notifications.index') }}" class='sidebar-link'>
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Notifikasi</span>
+                    </a>
+                </li>
         
                 
             </ul>
