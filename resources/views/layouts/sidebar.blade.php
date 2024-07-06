@@ -93,6 +93,13 @@
                         <span>Notifikasi</span>
                     </a>
                 </li>
+
+                <li class="sidebar-item{{ request()->routeIs('content.index') ? ' active' : '' }}">
+                    <a href="{{ route('content.index') }}" class='sidebar-link'>
+                        <i class="bi bi-bell-fill"></i>
+                        <span>Konten & Berita</span>
+                    </a>
+                </li>
         
                 
             </ul>
