@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataAccountController;
 use App\Http\Controllers\TicketController;
@@ -43,5 +44,8 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
-
-
+Route::get('password/reset/{token}', function ($token) {
+    // Di sini Anda dapat menampilkan halaman reset password atau mengarahkan ke halaman front-end.
+    return view('auth.passwords.reset', ['token' => $token]);
+})->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');

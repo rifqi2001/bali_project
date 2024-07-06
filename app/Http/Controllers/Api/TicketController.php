@@ -62,6 +62,7 @@ class TicketController extends Controller
 
         return response()->json([
             'message' => 'Ticket booked successfully',
+            'id' => $ticket->id,
             'total_price' => $totalPrice,
             'ticket_number' => $ticketNumber,
             'status' => $status,
