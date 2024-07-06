@@ -92,6 +92,7 @@
                                         <th>No</th>
                                         <th>Nomor tiket</th>
                                         <th>Nama Pelanggan</th>
+                                        <th>Nomor Telepon</th>
                                         <th>Tanggal Kunjungan</th>
                                         <th>Jumlah Tiket</th>
                                         <th>Kode Promo</th>
@@ -107,6 +108,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $data->ticket_number }}</td>
                                             <td>{{ $data->user->name ?? 'Tidak Diketahui' }}</td>
+                                            <td>{{ $data->user->phone_number }}</td>
                                             <td>{{ $data->visit_date }}</td>
                                             <td>{{ $data->ticket_count }}</td>
                                             <td>{{ $data->promo_code ?? '-' }}</td>
