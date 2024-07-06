@@ -7,6 +7,7 @@ use App\Http\Controllers\DataAccountController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ContentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('landingPage');
+});
+Route::get('/coba', function () {
+    return view('contents.coba');
 });
 
 
@@ -41,6 +45,8 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::get('/tickets/{id}/detail', [TicketController::class, 'detail'])->name('tickets.detail');
     Route::resource('payments', PaymentController::class);
     Route::resource('notifications', NotificationController::class);
+    Route::resource('content', ContentController::class);
+    
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
