@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\ContentController;
 
 
 /*
@@ -45,3 +46,6 @@ Route::post('/notifications/all', [NotificationController::class, 'sendToAll']);
 Route::post('/notifications/specific', [NotificationController::class, 'sendToSpecific']);
 Route::get('/notifications/{userId}', [NotificationController::class, 'getNotifications']);
 Route::delete('/notifications/{id}', [NotificationController::class, 'deleteNotification']);
+Route::get('/contents', [ContentController::class, 'index']);
+Route::post('/contents', [ContentController::class, 'store']);
+Route::get('/contents/{content}', [ContentController::class, 'show']);
