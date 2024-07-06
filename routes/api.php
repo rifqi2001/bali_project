@@ -38,6 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::put('/ticket/{id}', [TicketController::class, 'update']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::post('/payment/confirm', [PaymentController::class, 'confirmPayment']);
 Route::post('/notifications/all', [NotificationController::class, 'sendToAll']);
 Route::post('/notifications/specific', [NotificationController::class, 'sendToSpecific']);

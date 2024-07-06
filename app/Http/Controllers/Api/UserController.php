@@ -17,12 +17,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $request->user()->id,
+            // 'email' => 'required|string|email|max:255|unique:users,email,' . $request->user()->id,
+            'phone_number' => 'nullable|string|min:11',
         ]);
 
         $user = $request->user();
         $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
         $user->save();
 
         return response()->json($user);

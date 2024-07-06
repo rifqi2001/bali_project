@@ -42,32 +42,4 @@ class PaymentController extends Controller
 
         return response()->json(['error' => 'Image upload failed'], 400);
     }
-
-
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'bank_name' => 'required|string',
-    //         'account_owner' => 'required|string',
-    //         'account_number' => 'required|string',
-    //         'nominal' => 'required|numeric',
-    //         'transfer_date' => 'required|date',
-    //         'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
-
-    //     $path = $request->file('image_path')->store('payment_images');
-
-    //     $payment = new Payment();
-    //     $payment->user_id = auth()->id();
-    //     $payment->bank_name = $request->bank_name;
-    //     $payment->account_owner = $request->account_owner;
-    //     $payment->account_number = $request->account_number;
-    //     $payment->nominal = $request->nominal;
-    //     $payment->transfer_date = $request->transfer_date;
-    //     $payment->image_path = $path;
-    //     $payment->save();
-
-    //     return response()->json(['message' => 'Payment confirmation successful'], 201);
-    // }
 }
