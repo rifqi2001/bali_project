@@ -48,12 +48,14 @@ class DataAccountController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
+                'phone_number' => 'nullable|min:11',
                 'password' => 'required|string|min:8|confirmed',
             ]);
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone_number' => $request->phone_number,
                 'password' => bcrypt($request->password),
             ])->assignRole('customer');
 
@@ -61,6 +63,7 @@ class DataAccountController extends Controller
                 'user_id' => $user->id,
                 'name' => $request->name,
                 'email' => $request->email,
+                'phone_number' => $request->phone_number
             ]);
 
             DB::commit();
