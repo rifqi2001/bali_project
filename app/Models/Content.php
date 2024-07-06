@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Content extends Model
 {
@@ -14,7 +15,7 @@ class Content extends Model
      *
      * @var string
      */
-    protected $table = 'contents';
+    // protected $table = 'contents';
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +27,9 @@ class Content extends Model
         'content',
         'image',
     ];
+
+    public function getImageAttribute($value)
+    {
+        return Storage::url($value);
+    }
 }
