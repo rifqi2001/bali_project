@@ -17,6 +17,7 @@ class CreateSuperAdminTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->string('phone_number')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

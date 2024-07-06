@@ -17,6 +17,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'phone_number' => 'nullable|string',
         ]);
 
         // Temukan user berdasarkan email
@@ -58,6 +59,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'phone_number' => 'nullable|string|min:11'
         ]);
 
         if ($validator->fails()) {
@@ -71,6 +73,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'phone_number' => $request->phone_number
             ]);
 
             $user->assignRole('customer');
