@@ -94,12 +94,13 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item{{ request()->routeIs('content.index') ? ' active' : '' }}">
-                    <a href="{{ route('content.index') }}" class='sidebar-link'>
-                        <i class="bi bi-bell-fill"></i>
-                        <span>Konten & Berita</span>
+                <li class="sidebar-item{{ request()->routeIs('contents.index') ? ' active' : '' }}">
+                    <a href="{{ route('contents.index') }}" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-text"></i> <!-- Ganti dengan ikon yang sesuai -->
+                        <span>Konten</span>
                     </a>
                 </li>
+                
         
                 
             </ul>
