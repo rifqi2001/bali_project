@@ -45,7 +45,7 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::get('/tickets/{id}/detail', [TicketController::class, 'detail'])->name('tickets.detail');
     Route::resource('payments', PaymentController::class);
     Route::resource('notifications', NotificationController::class);
-    Route::resource('content', ContentController::class);
+    Route::resource('contents', ContentController::class);
     
 });
 
