@@ -35,6 +35,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/logout', 'actionlogout')->name('logout');
 
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('ticket.show');
+    Route::put('/tickets/{id}/status', [TicketController::class, 'updateStatus'])->name('ticket.updateStatus');
+});
 
 Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::get('/dashboard', function () {
@@ -46,7 +50,6 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::resource('payments', PaymentController::class);
     Route::resource('notifications', NotificationController::class);
     Route::resource('contents', ContentController::class);
-    
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
@@ -55,3 +58,5 @@ Route::get('password/reset/{token}', function ($token) {
     return view('auth.passwords.reset', ['token' => $token]);
 })->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
