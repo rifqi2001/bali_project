@@ -15,15 +15,33 @@ class AuthController extends Controller
 
     public function actionlogin(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        // $credentials = $request->only('email', 'password');
         
+        // if (Auth::attempt($credentials)) {
+        //     $user = Auth::user();
+            
+        //     if ($user->hasRole('superAdmin')) {
+        //         return redirect()->route('dashboard')->with('success', 'Selamat Datang, ' . $user->name);
+        //     } else {
+        //         return redirect()->route('login')->with('error', 'Login failed, please check your credentials.');
+        //     }
+        // } else {
+        //     return redirect()->route('login')->with('error', 'Login failed, please check your credentials.');
+        // }
+
+        $credentials = $request->only('email', 'password');
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             
             if ($user->hasRole('superAdmin')) {
-                return redirect()->route('dashboard')->with('success', 'Selamat Datang, ' . $user->name);
+                $request->session()->regenerate();
+
+                // Redirect to intended URL if exists, otherwise redirect to dashboard
+                return redirect()->intended('/dashboard')->with('success', 'Selamat Datang, ' . $user->name);
             } else {
-                return redirect()->route('login')->with('error', 'Login failed, please check your credentials.');
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Login failed, only superAdmin can access this section.');
             }
         } else {
             return redirect()->route('login')->with('error', 'Login failed, please check your credentials.');

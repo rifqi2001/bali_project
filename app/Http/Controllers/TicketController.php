@@ -91,6 +91,8 @@ class TicketController extends Controller
         // $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
 
         // return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
+        $ticket = Ticket::findOrFail($id);
+        return view('ticket.show', compact('ticket'));
     }
 
     /**
@@ -122,6 +124,19 @@ class TicketController extends Controller
         $ticket->save();
     
         return redirect()->route('tickets.index')->with('success', 'Status tiket berhasil diupdate.');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string',
+        ]);
+
+        $ticket = Ticket::findOrFail($id);
+        $ticket->status = $request->status;
+        $ticket->save();
+
+        return redirect()->route('ticket.show', $id)->with('success', 'Status tiket berhasil diubah');
     }
 
     /**
