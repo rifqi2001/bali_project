@@ -8,18 +8,27 @@
     </a>
 </header>
 <div class="page-heading">
-    <h3>Manajemen Konten</h3>
+    <h3>Detail Konten</h3>
 </div> 
-<!-- Bordered table start -->
-<section class="section">
-    <div class="container mt-2">
-        <h2>{{ $contents->title }}</h2>
-        <p><strong>Created at:</strong> {{ $contents->created_at->format('d M Y') }}</p>
-        <img src="{{ ($contents->image) }}" alt="{{ $contents->title }}" class="img-fluid mb-3">
-        <p>{{ $contents->content }}</p>
-        <a href="{{ route('contents.index') }}" class="btn btn-secondary">Back</a>
+<div class="card">
+    <div class="card-content">
+        <div class="card-body">
+            <!-- Bordered table start -->
+            <section class="section">
+                <a href="{{ route('contents.index') }}" class="btn btn-secondary"> < Kembali</a>
+                <div class="container mt-2">
+                    <h2>{{ $contents->title }}</h2>
+                    <p><strong>Created at:</strong> {{ $contents->created_at->format('d M Y') }}</p>
+                    {{-- <img class="img-fluid w-100" src="{{asset ('assets/compiled/jpg/banana.jpg') }}" alt="Card image cap"> --}}
+                    <img src="{{ ($contents->image) }}" alt="{{ $contents->title }}" class="img-fluid w-50 mb-3">
+                    <p>{{ $contents->content }}</p>
+                
+                </div>
+            </section>
+        </div>
     </div>
-</section>
+</div>
+
 
 @endsection
 
