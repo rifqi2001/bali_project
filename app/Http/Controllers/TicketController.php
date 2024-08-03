@@ -17,7 +17,7 @@ class TicketController extends Controller
     public function index()
     {
         // Mengambil semua data user dari tabel users
-        $tickets = Ticket::all();
+        $tickets = Ticket::orderBy('created_at', 'desc')->get();
         $users = User::all();
         $payments = PaymentConfirmation::all();
 
@@ -159,6 +159,9 @@ class TicketController extends Controller
     // Mengembalikan view partial yang akan dimuat ke dalam modal
     return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
 }
+
+
+
 
     
 }
