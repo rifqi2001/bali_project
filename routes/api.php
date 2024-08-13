@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/ticket/create', [TicketController::class, 'create']);
+    Route::get('/ticket/prices', [TicketController::class, 'getTicketPrices']);
     Route::get('/ticket', [TicketController::class, 'index']);
     Route::get('/ticket/{id}', [TicketController::class, 'show']);
     Route::delete('/ticket/{id}', [TicketController::class, 'destroy']);

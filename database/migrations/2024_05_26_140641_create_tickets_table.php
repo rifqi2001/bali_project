@@ -17,7 +17,8 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('visit_date');
-            $table->integer('ticket_count');
+            $table->integer('adult_ticket_count');
+            $table->integer('child_ticket_count');
             $table->string('promo_code')->nullable();
             $table->decimal('total_price', 10, 2);
             $table->string('status')->default('belum bayar');

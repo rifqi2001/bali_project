@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Ticket;
+use App\Models\TicketPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TicketController extends Controller
 {
 
     public function index()
     {
-        // $tickets = Ticket::where('user_id', Auth::id())->get();
-        // return response()->json($tickets);
-
         $user = Auth::user();
         $tickets = Ticket::where('user_id', $user->id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    return response()->json($tickets, 200);
+        return response()->json($tickets, 200);
     }
 
     public function show($id)
@@ -31,29 +30,32 @@ class TicketController extends Controller
     public function create(Request $request){
         $request->validate([
             'visit_date' => 'required|date',
-            'ticket_count' => 'required|integer|min:1|max:10',
+            'adult_ticket_count' => 'required|integer|min:1|max:10',
+            'child_ticket_count' => 'required|integer|min:0|max:10',
             'promo_code' => 'nullable|string',
         ]);
 
         $user = Auth::user();
-        $ticketPrice = 15000;
-        $discount = 0;
+
+        // Retrieve the ticket prices
+        $ticketPrices = $this->getTicketPrices($request->visit_date);
+
+        $totalPrice = ($request->adult_ticket_count * $ticketPrices['adult_price']) +
+                      ($request->child_ticket_count * $ticketPrices['child_price']);
 
         if ($request->promo_code) {
             $discount = $this->calculateDiscount($request->promo_code);
+            $totalPrice = $totalPrice * ((100 - $discount) / 100);
         }
 
-        $totalPrice = $request->ticket_count * $ticketPrice * ((100 - $discount) / 100);
-
         $ticketNumber = $this->generateUniqueTicketNumber();
-
-        // $status = $this->calculateTicketStatus($request->visit_date);
         $status = 'Belum Bayar';
 
         $ticket = Ticket::create([
             'user_id' => $user->id,
             'visit_date' => $request->visit_date,
-            'ticket_count' => $request->ticket_count,
+            'adult_ticket_count' => $request->adult_ticket_count,
+            'child_ticket_count' => $request->child_ticket_count,
             'promo_code' => $request->promo_code,
             'total_price' => $totalPrice,
             'status' => $status,
@@ -83,6 +85,36 @@ class TicketController extends Controller
         return 10;
     }
 
+    public function getTicketPrices(Request $request)
+    {
+        $date = $request->query('date');
+        if (!$date) {
+            return response()->json(['error' => 'Tanggal tidak disediakan.'], 400);
+        }
+
+        $prices = $this->fetchTicketPrices($date);
+
+        return response()->json($prices, 200);
+    }
+
+    private function fetchTicketPrices($visitDate)
+    {
+        $dayOfWeek = Carbon::parse($visitDate)->dayOfWeek;
+        $ticketPrices = TicketPrice::first();
+
+        if ($dayOfWeek == Carbon::SATURDAY || $dayOfWeek == Carbon::SUNDAY) {
+            return [
+                'adult_price' => $ticketPrices->adult_price_weekend,
+                'child_price' => $ticketPrices->child_price_weekend,
+            ];
+        } else {
+            return [
+                'adult_price' => $ticketPrices->adult_price_weekday,
+                'child_price' => $ticketPrices->child_price_weekday,
+            ];
+        }
+    }
+    
     public function getTicket($id)
     {
         $ticket = Ticket::find($id);
