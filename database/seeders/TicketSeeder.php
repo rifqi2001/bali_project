@@ -23,7 +23,8 @@ class TicketSeeder extends Seeder
             Ticket::create([
                 'user_id' => $user->id,
                 'visit_date' => Carbon::today()->addDays(rand(0, 30)),
-                'ticket_count' => rand(1, 5),
+                'adult_ticket_count' => rand(1, 5),
+                'child_ticket_count' => rand(1, 5),
                 'promo_code' => null,
                 'total_price' => rand(100000, 500000),
                 'status' => 'belum bayar', // Atau bisa diubah sesuai kebutuhan

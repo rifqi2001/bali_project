@@ -12,7 +12,8 @@ class Ticket extends Model
     protected $fillable = [
         'user_id', 
         'visit_date', 
-        'ticket_count', 
+        'adult_ticket_count',
+        'child_ticket_count', 
         'promo_code', 
         'total_price',
         'status',
