@@ -18,29 +18,24 @@ class DashboardController extends Controller
 
         return view('dashboardAdmin', compact('tickets', 'search'));
     }
-    // public function index(Request $request)
-    // {
-    //     $search = $request->input('search');
-    //     // $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')->get();
-    
-    //     return view('dashboardAdmin', compact('search'));
-    // }
 
     public function search(Request $request)
-{
-    $search = $request->input('search', '');
-    $request->session()->put('search', $search);
+    {
+        $search = $request->input('search', '');
+        $request->session()->put('search', $search);
 
-    $tickets = collect();
-    if (!empty($search)) {
-        $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')->get();
+        $tickets = collect();
+        if (!empty($search)) {
+            $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')
+                ->where('status', 'aktif')
+                ->get();
+        }
+
+        return view('dashboardAdmin', [
+            'tickets' => $tickets,
+            'search' => $search
+        ]);
     }
-
-    return view('dashboardAdmin', [
-        'tickets' => $tickets,
-        'search' => $search
-    ]);
-}
 
     public function updateStatusFromDashboard(Request $request, $id)
     {
@@ -57,4 +52,15 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.index', ['search' => $search])
             ->with('success', 'Status tiket berhasil diperbarui');
     }
+    public function validateTicket(Request $request, $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        // Ubah status menjadi nonaktif
+        $ticket->status = 'nonaktif';
+        $ticket->save();
+    
+        // Redirect kembali ke halaman dashboard
+        return redirect()->route('dashboard.index')->with('success', 'Tiket berhasil divalidasi dan dinonaktifkan.');
+    }
+
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\FacilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,15 +45,16 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
+    Route::put('/dashboard/tickets/{id}/validate', [DashboardController::class, 'validateTicket'])->name('dashboard.tickets.validate');
     Route::put('/dashboard/tickets/{id}/update-status', [DashboardController::class, 'updateStatusFromDashboard'])->name('dashboard.tickets.update-status');
     Route::resource('data-akun', DataAccountController::class);
     Route::resource('tickets', TicketController::class);
     Route::get('/tickets/search', [TicketController::class, 'search'])->name('tickets.search');
-
     Route::get('/tickets/{id}/detail', [TicketController::class, 'detail'])->name('tickets.detail');
     Route::resource('payments', PaymentController::class);
     Route::resource('notifications', NotificationController::class);
     Route::resource('contents', ContentController::class);
+    Route::resource('facilities', FacilityController::class);
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');

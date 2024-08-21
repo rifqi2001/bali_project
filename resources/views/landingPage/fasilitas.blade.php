@@ -12,7 +12,7 @@
                     <img src="{{ asset('img/fasilitas/mushola.jpg') }}" class="d-block w-100" alt="Fasilitas 1">
                     <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
                         <h5>Mushola</h5>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur magni fugit facere in dignissimos, molestiae ad omnis sit pariatur reprehenderit nam neque molestias enim rem commodi quod, laudantium incidunt nemo!</p>
+                        <p>Tempat ibadah yang nyaman</p>
                     </div>
                 </div>
                 <!-- Slide 2 -->
@@ -20,7 +20,7 @@
                     <img src="{{ asset('img/fasilitas/parkirMotor.jpg') }}" class="d-block w-100" alt="Fasilitas 2">
                     <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
                         <h5>Parkir Motor</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi sunt nobis eveniet vitae aspernatur eum officiis, laborum alias repellat eligendi, ipsam fugiat mollitia! Non delectus consequatur impedit obcaecati eligendi! Error.</p>
+                        <p>Parkir Kendaraan yang luas</p>
                     </div>
                 </div>
                 <!-- Slide 3 -->
@@ -28,7 +28,7 @@
                     <img src="{{ asset('img/fasilitas/toilet.jpg') }}" class="d-block w-100" alt="Fasilitas 3">
                     <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
                         <h5>Toilet</h5>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum perferendis fugiat veniam adipisci, sunt cupiditate eos, atque est velit dicta doloremque dolore tenetur quo! Accusamus cupiditate velit quis sed modi?</p>
+                        <p>Toilet dan kamar mandi bilas yang bersih</p>
                     </div>
                 </div>
             </div>
