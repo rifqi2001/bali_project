@@ -36,21 +36,30 @@
                                         <h5 class="modal-title" id="modalTambahPelangganLabel">Tambah Data Pelanggan</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form method="POST" action="{{ route('data-akun.store') }}">
+                                    <form id="formTambahPelanggan" method="POST" action="{{ route('data-akun.store') }}">
                                         <div class="modal-body">
                                             <!-- Form grup untuk membuat akun -->
                                             @csrf
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Nama Pelanggan</label>
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pelanggan" required>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pelanggan" required value="{{ old('name') }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email Pelanggan</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Pelanggan" required>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Pelanggan" required value="{{ old('email') }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="phone_number" class="form-label">Nomor Telepon Pelanggan</label>
-                                                <input type="phone_number" class="form-control" id="phone_number" name="phone_number" placeholder="Nomor Telepon Pelanggan" required>
+                                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Nomor Telepon Pelanggan" required value="{{ old('phone_number') }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password" class="form-label">Password</label>
@@ -66,10 +75,10 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                                             <button type="submit" class="btn btn-primary">Simpan</button>
                                         </div>
-                                    </form>                                    
+                                    </form>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="table-responsive">
                             <table class="table table-lg">
                                 <thead>
@@ -134,5 +143,13 @@
 @endsection
 
 @section('script')
+
+<script>
+    @if ($errors->any())
+        var myModal = new bootstrap.Modal(document.getElementById('modalTambahPelanggan'));
+        myModal.show();
+    @endif
+</script>
+
 
 @endsection

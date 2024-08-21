@@ -48,10 +48,10 @@
                                 <input type="password" name="password" required="">
                                 <label for="">Password</label>
                             </div>
-                            <div class="forget">
+                            {{-- <div class="forget">
                                 <label for=""><input type="checkbox">Ingat Saya | <a href="#">Lupa Password</a></label>
                             
-                            </div>
+                            </div> --}}
                             <button type="submit" >Masuk</button>
                             {{-- <div class="register">
                                 <p>Belum Mempunyai Akun? <a href="/registrasi">Daftar</a></p>

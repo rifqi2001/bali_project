@@ -32,7 +32,9 @@
                             <h5 class="card-title">Search Data</h5>
                             <form action="{{ route('dashboard.search') }}" method="GET" id="search-form">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Masukkan Nomor Tiket" name="search" id="search-input" value="{{ old('search', $search) }}">
+                                    <input type="search" class="form-control" placeholder="Masukkan Nomor Tiket" name="search" id="search-input" 
+                                    {{-- value="{{ old('search', $search) }}" --}}
+                                    >
                                     <button class="btn btn-primary" type="submit">Search</button>
                                 </div>
                             </form>
@@ -45,7 +47,7 @@
                                             <h5 class="card-title">Hasil Pencarian</h5>
                                             <hr>
                                             @if($tickets->isEmpty())
-                                                <p>Tiket tidak ditemukan.</p>
+                                                <p>Tiket tidak ditemukan atau belum aktif!</p>
                                             @else
                                             <div class="row">
                                                 @foreach($tickets as $ticket)
@@ -54,7 +56,7 @@
                                                             <div class="card-body">
                                                                 <div class="row mb-3">
                                                                     <div class="card">
-                                                                        <div class="card-body bg-light" style="border-radius:20px">
+                                                                        <div class="card-body bg-light" style="border-radius:20px; border : 3px green solid">
                                                                             <div class="d-flex justify-content-between">
                                                                                 <div class="col">
                                                                                     <p class="card-text">Nomor Tiket  : {{ $ticket->ticket_number }}</p>
@@ -69,29 +71,15 @@
                                                                             </div>
                                                                             <div class="row mt-2">
                                                                                 <div class="col-md-12 text-center">
-                                                                                    <!-- Tombol untuk meng-toggle collapse -->
-                                                                                    <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm-{{ $ticket->id }}" aria-expanded="false" aria-controls="collapseForm-{{ $ticket->id }}">
-                                                                                        Edit Status Tiket
-                                                                                    </button>
-
-                                                                                    <!-- Konten collapse -->
-                                                                                    <div class="d-flex justify-content-center align-items-center mt-2">
-                                                                                        <!-- Collapse -->
-                                                                                        <div class="collapse" id="collapseForm-{{ $ticket->id }}" style="width: 50%;">
-                                                                                            <div class="card card-body bg-light">
-                                                                                                <form method="POST" action="{{ route('dashboard.tickets.update-status', $ticket->id) }}">
-                                                                                                    @csrf
-                                                                                                    @method('PUT')
-                                                                                                    <input type="hidden" name="search" value="{{ $search }}">
-                                                                                                    <select class="form-select bg-primary" name="status" onchange="this.form.submit()" style="color: white" required>
-                                                                                                        <option value="belum bayar" {{ $ticket->status == 'belum bayar' ? 'selected' : '' }}>Belum Bayar</option>
-                                                                                                        <option value="aktif" {{ $ticket->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                                                                                                        <option value="nonaktif" {{ $ticket->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-                                                                                                    </select>
-                                                                                                </form>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <!-- Tombol Validasi Tiket -->
+                                                                                    <form method="POST" action="{{ route('dashboard.tickets.update-status', $ticket->id) }}">
+                                                                                        @csrf
+                                                                                        @method('PUT')
+                                                                                        <input type="hidden" name="status" value="nonaktif">
+                                                                                        <button type="submit" class="btn btn-warning">
+                                                                                            Validasi Tiket
+                                                                                        </button>
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -125,7 +113,7 @@
                                         </div>
                                         <div>
                                             <h6 class="text-muted font-semibold">Pengunjung Website</h6>
-                                            <h6 class="font-extrabold mb-0">112.000</h6>
+                                            <h6 class="font-extrabold mb-0">0</h6>
                                         </div>
                                     </div> 
                                 </div>
@@ -136,7 +124,7 @@
                                         </div>
                                         <div>
                                             <h6 class="text-muted font-semibold">Penjualan Tiket Dewasa</h6>
-                                            <h6 class="font-extrabold mb-0">183.000</h6>
+                                            <h6 class="font-extrabold mb-0">0</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +135,7 @@
                                         </div>
                                         <div>
                                             <h6 class="text-muted font-semibold">Penjualan Tiket Anak-anak</h6>
-                                            <h6 class="font-extrabold mb-0">80.000</h6>
+                                            <h6 class="font-extrabold mb-0">0</h6>
                                         </div>
                                     </div>
                                 </div>

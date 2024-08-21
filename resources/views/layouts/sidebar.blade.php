@@ -54,15 +54,38 @@
                         <i class="bi bi-people"></i>
                         <span>Akun User</span>
                     </a>
+                </li>
+
+                <li class="sidebar-item has-sub {{ request()->routeIs('contents.index') ? ' active' : '' }}
+                                                {{ request()->routeIs('facilities.index') ? ' active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-tools"></i>
+                        <span>Data Master</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item{{ request()->routeIs('contents.index') ? ' active' : '' }}">
+                            <a href="{{ route('contents.index') }}" class="submenu-link">Konten</a>
+                        </li>
+                        <li class="submenu-item{{ request()->routeIs('facilities.index') ? ' active' : '' }}">
+                            <a href="{{ route('facilities.index') }}" class="submenu-link">Fasilitas</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item{{ request()->routeIs('tickets.index') ? ' active' : '' }}">
+                    <a href="{{ route('tickets.index') }}" class='sidebar-link'>
+                        <i class="bi bi-people"></i>
+                        <span>Transaksi Tiket</span>
+                    </a>
                 </li>                
         
-                <li class="sidebar-item has-sub{{ request()->routeIs('tickets.index') ? ' active' : '' }}
+                {{-- <li class="sidebar-item has-sub{{ request()->routeIs('tickets.index') ? ' active' : '' }}
                                                 {{ request()->routeIs('payments.index') ? ' active' : '' }}">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-stack"></i>
                         <span>Data Tiket</span>
                     </a>
-                    <ul class="submenu">
+                    <ul class="submenu>
                         <li class="submenu-item{{ request()->routeIs('tickets.index') ? ' active' : '' }}">
                             <a href="{{ route('tickets.index') }}" class="submenu-link">Transaksi</a>
                         </li>
@@ -70,12 +93,12 @@
                             <a href="/tiket" class="submenu-link">Tiket</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="sidebar-item has-sub">
+                {{-- <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-collection-fill"></i>
-                        <span>Data Laporan</span>
+                        <span>Laporan</span>
                     </a>
                     <ul class="submenu">
                         <li class="submenu-item">
@@ -85,7 +108,7 @@
                             <a href="/" class="submenu-link">Kunjungan</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-item{{ request()->routeIs('notifications.index') ? ' active' : '' }}">
                     <a href="{{ route('notifications.index') }}" class='sidebar-link'>
@@ -94,12 +117,29 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item{{ request()->routeIs('contents.index') ? ' active' : '' }}">
+                <li class="sidebar-item">
+                    <a href="{{ route('logout') }}" class='sidebar-link'>
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+                
+
+                {{-- <li class="sidebar-item{{ request()->routeIs('contents.index') ? ' active' : '' }}">
                     <a href="{{ route('contents.index') }}" class='sidebar-link'>
                         <i class="bi bi-file-earmark-text"></i> <!-- Ganti dengan ikon yang sesuai -->
                         <span>Konten</span>
                     </a>
-                </li>
+                </li> --}}
+                
+                {{-- <li class="sidebar-item{{ request()->routeIs('facilities.index') ? ' active' : '' }}">
+                    <a href="{{ route('facilities.index') }}" class='sidebar-link'>
+                        <i class="bi bi-tools"></i> <!-- Ganti dengan ikon yang sesuai -->
+                        <span>Fasilitas</span>
+                    </a>
+                </li> --}}
+                
                 
         
                 
@@ -107,12 +147,7 @@
         
             <!-- Menu Logout -->
             <ul class="menu logout-menu">
-                <li class="sidebar-item">
-                    <a href="{{ route('logout') }}" class='sidebar-link'>
-                        <i class="bi bi-box-arrow-left"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
+                
             </ul>
         </div>                
     </div>

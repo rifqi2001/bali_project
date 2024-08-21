@@ -92,13 +92,13 @@
                                         <th>No</th>
                                         <th>Nomor tiket</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Nomor Telepon</th>
+                                        {{-- <th>Nomor Telepon</th> --}}
                                         <th>Tanggal Kunjungan</th>
                                         <th>Jumlah Tiket</th>
                                         <th>Kode Promo</th>
                                         <th>Total Harga</th>
                                         <th>Status</th>
-                                        <th>Detail</th> <!-- Kolom Detail -->
+                                        {{-- <th>Detail</th> <!-- Kolom Detail --> --}}
                                         <th>Aksi</th> <!-- Kolom Aksi -->
                                     </tr>
                                 </thead>
@@ -108,17 +108,18 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $data->ticket_number }}</td>
                                             <td>{{ $data->user->name ?? 'Tidak Diketahui' }}</td>
-                                            <td>{{ $data->user->phone_number }}</td>
+                                            {{-- <td>{{ $data->user->phone_number }}</td> --}}
                                             <td>{{ $data->visit_date }}</td>
                                             <td>{{ $data->ticket_count }}</td>
                                             <td>{{ $data->promo_code ?? '-' }}</td>
                                             <td>{{ $data->total_price }}</td>
                                             <td>{{ $data->status }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 
                                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal" data-id="{{ $data->id }}">Lihat Detail</button>
-                                            </td>
+                                            </td> --}}
                                             <td>
+                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#detailModal" data-id="{{ $data->id }}"><i class="bi bi-eye"></i></button>
                                                 <!-- Tombol aksi untuk mengedit atau menghapus data akun -->
                                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $data->id }}">
                                                     <i class="bi bi-pencil"></i>
