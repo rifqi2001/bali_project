@@ -77,7 +77,33 @@
                         <i class="bi bi-people"></i>
                         <span>Transaksi Tiket</span>
                     </a>
-                </li>                
+                </li>  
+                <li class="sidebar-item{{ request()->routeIs('ticket-pricess.index') ? ' active' : '' }}">
+                    <a href="{{ route('ticket-prices.index') }}" class='sidebar-link'>
+                        <i class="bi bi-ticket-perforated"></i>
+                        <span>Harga Tiket</span>
+                    </a>
+                </li>  
+                <li class="sidebar-item{{ request()->routeIs('ticket-reports.index') ? ' active' : '' }}">
+                    <a href="{{ route('ticket-reports.index') }}" class='sidebar-link'>
+                        <i class="bi bi-clipboard-data"></i>
+                        <span>Laporan Tiket Masuk</span>
+                    </a>
+                </li>  
+                {{-- <li class="sidebar-item has-sub {{ request()->routeIs('ticket-reports.index') ? ' active' : '' }} ">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-clipboard-data"></i>
+                        <span>Laporan</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="{{ route('ticket-reports.index') }}" class="submenu-link">Tiket Masuk</a>
+                        </li>
+                        <li class="submenu-item{{ request()->routeIs('facilities.index') ? ' active' : '' }}">
+                            <a href="" class="submenu-link">Kunjungan</a>
+                        </li>
+                    </ul>
+                </li>             --}}
         
                 {{-- <li class="sidebar-item has-sub{{ request()->routeIs('tickets.index') ? ' active' : '' }}
                                                 {{ request()->routeIs('payments.index') ? ' active' : '' }}">
@@ -112,7 +138,7 @@
 
                 <li class="sidebar-item{{ request()->routeIs('notifications.index') ? ' active' : '' }}">
                     <a href="{{ route('notifications.index') }}" class='sidebar-link'>
-                        <i class="bi bi-bell-fill"></i>
+                        <i class="bi bi-bell"></i>
                         <span>Notifikasi</span>
                     </a>
                 </li>

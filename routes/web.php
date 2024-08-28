@@ -10,6 +10,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\TicketReportController;
+use App\Http\Controllers\TicketPriceController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +59,9 @@ Route::middleware(['auth', 'role:superAdmin'])->group(function () {
     Route::resource('notifications', NotificationController::class);
     Route::resource('contents', ContentController::class);
     Route::resource('facilities', FacilityController::class);
+    Route::resource('ticket-reports', TicketReportController::class);
+    Route::resource('ticket-prices', TicketPriceController::class);
+
 });
 
 // Route::get('/transaksi', [TicketController::class, 'index'])->name('tickets.index');
