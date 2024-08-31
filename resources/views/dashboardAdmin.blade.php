@@ -5,7 +5,7 @@
 @section('css')
 <!-- Tambahkan CSS khusus jika diperlukan -->
 <style>
-    
+    /* CSS khusus jika diperlukan */
 </style>
 @endsection
 
@@ -32,12 +32,11 @@
                             <h5 class="card-title">Search Data</h5>
                             <form action="{{ route('dashboard.search') }}" method="GET" id="search-form">
                                 <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Masukkan Nomor Tiket" name="search" id="search-input" 
-                                    {{-- value="{{ old('search', $search) }}" --}}
-                                    >
+                                    <input type="search" class="form-control" placeholder="Masukkan Nomor Tiket" name="search" id="search-input">
                                     <button class="btn btn-primary" type="submit">Search</button>
                                 </div>
                             </form>
+                            
                             <!-- Hasil Pencarian -->
                             @if(isset($tickets))
                             <div class="row mt-3">
@@ -71,17 +70,22 @@
                                                                             </div>
                                                                             <div class="row mt-2">
                                                                                 <div class="col-md-12 text-center">
-                                                                                    <!-- Tombol Validasi Tiket -->
-                                                                                    <form method="POST" action="{{ route('dashboard.tickets.update-status', $ticket->id) }}">
-                                                                                        @csrf
-                                                                                        @method('PUT')
-                                                                                        <input type="hidden" name="status" value="nonaktif">
-                                                                                        <button type="submit" class="btn btn-warning">
-                                                                                            Validasi Tiket
-                                                                                        </button>
-                                                                                    </form>
+                                                                                    <!-- Hanya tampilkan tombol jika tiket belum nonaktif -->
+                                                                                    @if($ticket->status !== 'nonaktif')
+                                                                                        <form method="POST" action="{{ route('dashboard.tickets.update-status', $ticket->id) }}">
+                                                                                            @csrf
+                                                                                            @method('PUT')
+                                                                                            <input type="hidden" name="status" value="nonaktif">
+                                                                                            <button type="submit" class="btn btn-warning">
+                                                                                                Validasi Tiket
+                                                                                            </button>
+                                                                                        </form>
+                                                                                    @else
+                                                                                        <p class="text-success">Tiket sudah divalidasi</p>
+                                                                                    @endif
                                                                                 </div>
                                                                             </div>
+                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -101,7 +105,7 @@
                 </div>
                 
                 <!-- Kolom Kanan (Statistik) -->
-                <div class="col-12 col-lg-4 mb-3">
+                {{-- <div class="col-12 col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Statistics</h5>
@@ -142,11 +146,11 @@
                             </div> <!-- /row -->
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Chart -->
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -157,7 +161,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Chart -->
         </div>
     </section>
@@ -166,5 +170,18 @@
 @endsection
 
 @section('scripts')
-<!-- Tambahkan script khusus jika diperlukan -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.focus();
+        }
+
+        // Jika ada parameter pencarian dalam URL, pastikan input pencarian sudah terisi
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('search')) {
+            searchInput.value = urlParams.get('search');
+        }
+    });
+</script>
 @endsection
