@@ -13,6 +13,7 @@ class DashboardController extends Controller
         $tickets = collect();
 
         if ($search) {
+            // Cari tiket dengan nomor tiket yang sesuai dengan pencarian
             $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')->get();
         }
 
@@ -26,6 +27,7 @@ class DashboardController extends Controller
 
         $tickets = collect();
         if (!empty($search)) {
+            // Cari tiket yang aktif dan nomor tiketnya sesuai dengan pencarian
             $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')
                 ->where('status', 'aktif')
                 ->get();
@@ -47,20 +49,23 @@ class DashboardController extends Controller
         $ticket->status = $request->input('status');
         $ticket->save();
 
-        $search = $request->input('search', '');
+        $search = $request->session()->get('search', $request->input('search', ''));
 
         return redirect()->route('dashboard.index', ['search' => $search])
             ->with('success', 'Status tiket berhasil diperbarui');
     }
+
     public function validateTicket(Request $request, $id)
     {
         $ticket = Ticket::findOrFail($id);
         // Ubah status menjadi nonaktif
         $ticket->status = 'nonaktif';
         $ticket->save();
-    
-        // Redirect kembali ke halaman dashboard
-        return redirect()->route('dashboard.index')->with('success', 'Tiket berhasil divalidasi dan dinonaktifkan.');
-    }
 
+        $search = $request->session()->get('search', $request->input('search', ''));
+
+        // Redirect kembali ke halaman dashboard
+        return redirect()->route('dashboard.index', ['search' => $search])
+            ->with('success', 'Tiket berhasil divalidasi dan dinonaktifkan.');
+    }
 }

@@ -7,30 +7,15 @@
         <!-- Carousel -->
         <div id="facilitiesCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <!-- Slide 1 -->
-                <div class="carousel-item active">
-                    <img src="{{ asset('img/fasilitas/mushola.jpg') }}" class="d-block w-100" alt="Fasilitas 1">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
-                        <h5>Mushola</h5>
-                        <p>Tempat ibadah yang nyaman</p>
+                @foreach ($facilities as $index => $facility)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img src="{{ asset('storage/images/' . $facility->image) }}" class="d-block w-100" alt="{{ $facility->name }}">
+                        <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
+                            <h5>{{ $facility->name }}</h5>
+                            <p>{{ $facility->description }}</p>
+                        </div>
                     </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="carousel-item">
-                    <img src="{{ asset('img/fasilitas/parkirMotor.jpg') }}" class="d-block w-100" alt="Fasilitas 2">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
-                        <h5>Parkir Motor</h5>
-                        <p>Parkir Kendaraan yang luas</p>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="carousel-item">
-                    <img src="{{ asset('img/fasilitas/toilet.jpg') }}" class="d-block w-100" alt="Fasilitas 3">
-                    <div class="carousel-caption d-none d-md-block" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); border-radius:10px;">
-                        <h5>Toilet</h5>
-                        <p>Toilet dan kamar mandi bilas yang bersih</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#facilitiesCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

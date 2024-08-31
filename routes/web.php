@@ -12,6 +12,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TicketReportController;
 use App\Http\Controllers\TicketPriceController;
+use App\Http\Controllers\LandingPageController;
 
 
 
@@ -26,9 +27,11 @@ use App\Http\Controllers\TicketPriceController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingPage');
-});
+// Route::get('/', function () {
+//     return view('landingPage');
+// });
+Route::get('/', [LandingPageController::class, 'index']);
+
 Route::get('/coba', function () {
     return view('contents.coba');
 });
