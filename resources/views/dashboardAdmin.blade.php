@@ -105,7 +105,7 @@
                 </div>
                 
                 <!-- Kolom Kanan (Statistik) -->
-                {{-- <div class="col-12 col-lg-4 mb-3">
+                <div class="col-12 col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Statistics</h5>
@@ -146,11 +146,11 @@
                             </div> <!-- /row -->
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
 
             <!-- Chart -->
-            {{-- <div class="row">
+            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -161,7 +161,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <!-- /Chart -->
         </div>
     </section>
