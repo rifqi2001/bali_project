@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        // Ambil parameter pencarian dari session atau input
         $search = $request->session()->get('search', $request->input('search', ''));
         $tickets = collect();
 
@@ -17,7 +19,11 @@ class DashboardController extends Controller
             $tickets = Ticket::where('ticket_number', 'LIKE', '%' . $search . '%')->get();
         }
 
-        return view('dashboardAdmin', compact('tickets', 'search'));
+        // Hitung total pengunjung
+        $totalVisitors = Visitor::count();
+
+        // Kirim data pencarian tiket dan total pengunjung ke view
+        return view('dashboardAdmin', compact('tickets', 'search', 'totalVisitors'));
     }
 
     public function search(Request $request)
