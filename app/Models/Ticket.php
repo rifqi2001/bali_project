@@ -24,4 +24,10 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Definisikan relasi hasOne ke PaymentConfirmation
+    public function paymentConfirmation()
+    {
+        return $this->hasOne(PaymentConfirmation::class);
+    }
 }
