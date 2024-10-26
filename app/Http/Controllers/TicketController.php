@@ -15,16 +15,20 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        // Mengambil semua data user dari tabel users
-        $tickets = Ticket::orderBy('created_at', 'desc')->get();
-        $users = User::all();
-        $payments = PaymentConfirmation::all();
+{
+    // Memuat tiket dengan pembayaran terkait
+    $tickets = Ticket::with('paymentConfirmation')->orderBy('created_at', 'desc')->get();
+    $users = User::all();
 
-        
-        // Mengembalikan view akun.index dengan variabel accounts
-        return view('dataTiket.transaksi.index', compact('tickets', 'users'));
+    foreach ($tickets as $ticket) {
+        $ticket->total_tickets = $ticket->adult_ticket_count + $ticket->child_ticket_count;
     }
+
+    return view('dataTiket.transaksi.index', compact('tickets', 'users'));
+}
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +37,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        // Jika ada tampilan form create, masukkan logika di sini
     }
 
     // Fungsi untuk menghasilkan nomor tiket yang unik
@@ -55,28 +59,27 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         // Validasi data yang diterima
-    $validatedData = $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'visit_date' => 'required|date',
-        'ticket_count' => 'required|integer',
-        'promo_code' => 'nullable|string',
-        'total_price' => 'required|numeric',
-        'status' => 'required|string',
-    ]);
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'visit_date' => 'required|date',
+            'adult_ticket_count' => 'required|integer',
+            'child_ticket_count' => 'required|integer',
+            'promo_code' => 'nullable|string',
+            'total_price' => 'required|numeric',
+            'status' => 'required|string',
+        ]);
 
+        // Generate nomor tiket unik
+        $ticketNumber = $this->generateUniqueTicketNumber();
 
-    // Generate nomor tiket unik
-    $ticketNumber = $this->generateUniqueTicketNumber();
+        // Tambahkan nomor tiket ke data yang akan disimpan
+        $validatedData['ticket_number'] = $ticketNumber;
 
+        // Simpan data ke dalam tabel tickets
+        Ticket::create($validatedData);
 
-    // Tambahkan nomor tiket ke data yang akan disimpan
-    $validatedData['ticket_number'] = $ticketNumber;
-
-    // Simpan data ke dalam tabel tickets
-    Ticket::create($validatedData);
-
-    // Redirect atau response sesuai kebutuhan
-    return redirect()->route('tickets.index')->with('success', 'Transaksi tiket berhasil ditambahkan.');
+        // Redirect atau response sesuai kebutuhan
+        return redirect()->route('tickets.index')->with('success', 'Transaksi tiket berhasil ditambahkan.');
     }
 
     /**
@@ -87,12 +90,10 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        // $ticket = Ticket::findOrFail($id);
-        // $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
-
-        // return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
         $ticket = Ticket::findOrFail($id);
-        return view('ticket.show', compact('ticket'));
+        $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
+
+        return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
     }
 
     /**
@@ -103,7 +104,7 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Jika ada tampilan form edit, masukkan logika di sini
     }
 
     /**
@@ -126,23 +127,10 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with('success', 'Status tiket berhasil diupdate.');
     }
 
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|string',
-        ]);
-
-        $ticket = Ticket::findOrFail($id);
-        $ticket->status = $request->status;
-        $ticket->save();
-
-        return redirect()->route('ticket.show', $id)->with('success', 'Status tiket berhasil diubah');
-    }
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ticket $ticket)
@@ -151,17 +139,18 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with('success', 'Data tiket berhasil dihapus.');
     }
 
+    /**
+     * Display the detail of the specified ticket.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function detail($id)
-{
-    $ticket = Ticket::findOrFail($id);
-    $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
+    {
+        $ticket = Ticket::findOrFail($id);
+        $paymentConfirmations = PaymentConfirmation::where('ticket_id', $ticket->id)->get();
 
-    // Mengembalikan view partial yang akan dimuat ke dalam modal
-    return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
-}
-
-
-
-
-    
+        // Mengembalikan view partial yang akan dimuat ke dalam modal
+        return view('dataTiket.transaksi.detail', compact('ticket', 'paymentConfirmations'));
+    }
 }
